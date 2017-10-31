@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.home.lsd.entity;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Kasper
+ */
+public class Story {
+
+    int id;
+    String title;
+    String link;
+    String type;
+    String user;
+    ArrayList<Comment> comments;
+
+    public Story(int id, String title, String link, String type, String user, ArrayList<Comment> comments) {
+        this.id = id;
+        this.title = title;
+        this.link = link;
+        this.type = type;
+        this.user = user;
+        this.comments = comments;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        String result = "ID = " + id + " Story Title = " + title + " Link = " + link + " Type = " + type + " User = " + user + " Comments: ";
+        for (int i = 0; i < comments.size(); i++) {
+            result += ("COMMENT # " + i + " " + comments.get(i).getContent() + " BY " + comments.get(i).getUser());
+        }
+        return result;
+    }
+
+}
