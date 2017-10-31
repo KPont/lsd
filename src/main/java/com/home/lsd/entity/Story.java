@@ -28,6 +28,14 @@ public class Story {
         this.user = user;
         this.comments = comments;
     }
+    
+    public Story(String title, String link, String type, String user, ArrayList<Comment> comments) {
+        this.title = title;
+        this.link = link;
+        this.type = type;
+        this.user = user;
+        this.comments = comments;
+    }
 
     public int getId() {
         return id;

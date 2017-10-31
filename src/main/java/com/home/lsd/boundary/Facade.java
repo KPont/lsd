@@ -32,9 +32,9 @@ public class Facade implements IBackend{
 //        dbc.testAddUser();
 //        dbc.testGetUserById();
 //        dbc.testGetUserByName();
-//        dbc.testGetStoryById();
+        dbc.testGetStoryById();
 //        dbc.testAddCommentToStory();
-        dbc.testLogin();
+//        dbc.testLogin();
     }
 
     public void testConnection() throws Exception {
@@ -60,7 +60,7 @@ public class Facade implements IBackend{
     }
 
     public void testAddStory() throws Exception {
-        Story story = new Story(99999999, "testAdd", "www.testadd.com", "testaddtype", "Karsten", null);
+        Story story = new Story("testAdd2", "www.testadd2.com", "testadd2type", "Karsten", null);
         ms.addStory(story);
     }
 
@@ -82,7 +82,7 @@ public class Facade implements IBackend{
     }
     
     public void testGetStoryById() throws Exception{
-        Story story = ms.getStoryById(99999999);
+        Story story = ms.getStoryById(5);
         
         System.out.println(story.toString());
     }
@@ -122,7 +122,7 @@ public class Facade implements IBackend{
 
     @Override
     public void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName) {
-        Story story = new Story(storyId, storyTitle, storyLink, storyType, userName, null);
+        Story story = new Story(storyTitle, storyLink, storyType, userName, null);
         
         try {
             ms.addStory(story);

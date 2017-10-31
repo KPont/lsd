@@ -177,6 +177,19 @@ public class MySQL {
             while (rs2.next()) {
                 user_id = rs2.getInt("Users.user_id");
             }
+            
+            int count = 0;
+
+            final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
+
+            PreparedStatement ps3 = conn.prepareStatement(command3);
+//			ps.setString(1, "Users");
+
+            ResultSet rs3 = ps3.executeQuery();
+
+            while (rs3.next()) {
+                count = rs3.getInt("rowcount");
+            }
 
             final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
                     + "?,"
@@ -185,7 +198,7 @@ public class MySQL {
                     + "?,"
                     + "?)";
             ps = conn.prepareStatement(command);
-            ps.setInt(1, story.getId());
+            ps.setInt(1, count);
             ps.setString(2, story.getTitle());
             ps.setString(3, story.getLink());
             ps.setString(4, story.getType());
