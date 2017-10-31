@@ -5,15 +5,16 @@
  */
 package com.home.lsd.boundary;
 
+import java.util.List;
+
 import com.home.lsd.entity.Story;
-import java.util.ArrayList;
 
 /**
  *
  * @author Kasper
  */
 public interface IBackend {
-    ArrayList<Story> getStories();
+    List<Story> getStories();
     
     Story getStory(int id);
     
