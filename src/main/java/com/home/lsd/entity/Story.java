@@ -18,6 +18,7 @@ public class Story {
     String link;
     String type;
     String user;
+    String userPw;
     ArrayList<Comment> comments;
 
     public Story(int id, String title, String link, String type, String user, ArrayList<Comment> comments) {
@@ -29,14 +30,24 @@ public class Story {
         this.comments = comments;
     }
     
-    public Story(String title, String link, String type, String user, ArrayList<Comment> comments) {
+    public Story(String title, String link, String type, String user, String userPw, ArrayList<Comment> comments) {
         this.title = title;
         this.link = link;
         this.type = type;
         this.user = user;
+        this.userPw = userPw;
         this.comments = comments;
     }
 
+    public String getUserPw() {
+        return userPw;
+    }
+
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
+    }
+    
+    
     public int getId() {
         return id;
     }

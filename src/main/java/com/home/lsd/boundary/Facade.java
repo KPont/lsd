@@ -28,14 +28,14 @@ public class Facade implements IBackend{
 //        dbc.testConnection();
 //        dbc.testAddUsers();
 //        dbc.testGetStories();
-//        dbc.testAddStory();
+        dbc.testAddStory();
 //        dbc.testAddUser();
 //        dbc.testGetUserById();
 //        dbc.testGetUserByName();
 //        dbc.testGetStoryById();
 //        dbc.testAddCommentToStory();
 //        dbc.testLogin();
-        dbc.getLatestStory();
+//        dbc.getLatestStory();
     }
 
     public void testConnection() throws Exception {
@@ -61,8 +61,8 @@ public class Facade implements IBackend{
     }
 
     public void testAddStory() throws Exception {
-        Story story = new Story("testAdd2", "www.testadd2.com", "testadd2type", "Karsten", null);
-        ms.addStory(story);
+        Story story = new Story("testAdd2", "www.testadd2.com", "testadd2type", "Karsten", "hej3", null);
+        System.out.println(ms.addStory(story));
     }
 
     public void testAddUser() throws Exception {
@@ -83,13 +83,13 @@ public class Facade implements IBackend{
     }
     
     public void testGetStoryById() throws Exception{
-        Story story = ms.getStoryById(5);
+        Story story = ms.getStoryById(10);
         
         System.out.println(story.toString());
     }
     
     public void testAddCommentToStory() throws Exception{
-        ms.addCommentToStory(99999999, new Comment("New Comment Test", "Karsten"));
+        System.out.println(ms.addCommentToStory(10, new Comment("New Comment Test", "Karsten", "hej3")));
     }
     
     public void testLogin() throws Exception{
@@ -126,8 +126,8 @@ public class Facade implements IBackend{
     }
 
     @Override
-    public void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName) {
-        Story story = new Story(storyTitle, storyLink, storyType, userName, null);
+    public void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName, String userPw) {
+        Story story = new Story(storyTitle, storyLink, storyType, userName, userPw, null);
         
         try {
             ms.addStory(story);
@@ -163,9 +163,9 @@ public class Facade implements IBackend{
     }
 
     @Override
-    public void addCommentToStory(int storyId, String userName, String comment) {
+    public void addCommentToStory(int storyId, String userName, String userPw, String comment) {
         try {
-            ms.addCommentToStory(storyId, new Comment(comment, userName));
+            ms.addCommentToStory(storyId, new Comment(comment, userName, userPw));
         } catch (Exception ex) {
             Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
         }

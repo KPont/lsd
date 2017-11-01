@@ -19,19 +19,20 @@ public class StoryController {
 		String storyLink = input.getString("post_url");
 		String storyType = input.getString("post_type");
 		String userName = input.getString("username");
+                String userPw = input.getString("pwd_hash");
 		String comment = input.getString("post_text");
 
 		switch (input.getString("post_type")) {
 
 		case "story":
-			facade.addStory(0, storyTitle, storyLink, storyType, userName);
+			facade.addStory(0, storyTitle, storyLink, storyType, userName, userPw);
 			break;
 
 		case "comment":
 			int storyId = input.getInt("hanesst_id");
 			if (storyExists(input)) {
 
-				facade.addCommentToStory(storyId, userName, comment);
+				facade.addCommentToStory(storyId, userName, userPw, comment);
 				break;
 			}
 			return Response.status(Status.BAD_REQUEST).entity(input);

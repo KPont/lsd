@@ -18,7 +18,7 @@ public interface IBackend {
     
     Story getStory(int id);
     
-    void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName);
+    void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName, String userPw);
     
     void manageStory(int storyID, Story story);
     
@@ -26,7 +26,7 @@ public interface IBackend {
     
     void registerUser(String userName, String password, String email);
     
-    void addCommentToStory(int storyId, String userId, String comment);
+    void addCommentToStory(int storyId, String userId, String userPw, String comment);
     
     
 }

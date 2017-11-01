@@ -163,65 +163,71 @@ public class MySQL {
         return stories;
     }
 
-    public void addStory(Story story) throws Exception {
+    public String addStory(Story story) throws Exception {
+        String result = "Invalid user credentials";
+        String login = getLogin(story.getUser(), story.getUserPw());
 
-        PreparedStatement ps = null;
+        if (login.equals("Login success")) {
+            PreparedStatement ps = null;
 
-        try (Connection conn = getConnection()) {
+            try (Connection conn = getConnection()) {
 
-            int user_id = 0;
+                int user_id = 0;
 
-            final String command2 = "SELECT user_id FROM Users WHERE Users.user_name = '" + story.getUser() + "';";
+                final String command2 = "SELECT user_id FROM Users WHERE Users.user_name = '" + story.getUser() + "';";
 
-            PreparedStatement ps2 = conn.prepareStatement(command2);
+                PreparedStatement ps2 = conn.prepareStatement(command2);
 //			ps.setString(1, "Users");
 
-            ResultSet rs2 = ps2.executeQuery();
+                ResultSet rs2 = ps2.executeQuery();
 
-            while (rs2.next()) {
-                user_id = rs2.getInt("Users.user_id");
-            }
+                while (rs2.next()) {
+                    user_id = rs2.getInt("Users.user_id");
+                }
 
-            int count = 0;
+                int count = 0;
 
-            final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
+                final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
 
-            PreparedStatement ps3 = conn.prepareStatement(command3);
+                PreparedStatement ps3 = conn.prepareStatement(command3);
 //			ps.setString(1, "Users");
 
-            ResultSet rs3 = ps3.executeQuery();
+                ResultSet rs3 = ps3.executeQuery();
 
-            while (rs3.next()) {
-                count = rs3.getInt("rowcount");
-            }
+                while (rs3.next()) {
+                    count = rs3.getInt("rowcount");
+                }
+                    count++;
 
-            final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
-                    + "?,"
-                    + "?,"
-                    + "?,"
-                    + "?,"
-                    + "?)";
-            ps = conn.prepareStatement(command);
-            ps.setInt(1, count);
-            ps.setString(2, story.getTitle());
-            ps.setString(3, story.getLink());
-            ps.setString(4, story.getType());
-            ps.setInt(5, user_id);
+                final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
+                        + "?,"
+                        + "?,"
+                        + "?,"
+                        + "?,"
+                        + "?)";
+                ps = conn.prepareStatement(command);
+                ps.setInt(1, count);
+                ps.setString(2, story.getTitle());
+                ps.setString(3, story.getLink());
+                ps.setString(4, story.getType());
+                ps.setInt(5, user_id);
 
-            if (ps != null) {
+                if (ps != null) {
 //                ResultSet rs = ps.executeQuery();
-                ps.executeUpdate();
-
+                    ps.executeUpdate();
+                    result = "Successfully added story";
 //                while (rs.next()) {
 //                    result.add(rs.getString("Users.user_pw"));
 //                }
-            }
+                }
 
-        }
+            }
+        } 
+        return result;
     }
 
     public Story getLatestStory() throws Exception {
-        
+
         Story story = null;
         PreparedStatement ps = null;
 
@@ -271,7 +277,7 @@ public class MySQL {
                     }
 
                     story = new Story(storyId, storyTitle, storyLink, storyType, getUserById(userId).getUserName(), storyComments);
-                
+
                 }
             }
 
@@ -279,46 +285,52 @@ public class MySQL {
         return story;
     }
 
-    public void addCommentToStory(int storyId, Comment comment) throws Exception {
+    public String addCommentToStory(int storyId, Comment comment) throws Exception {
+        String result = "Error in user credentials";
+        String login = getLogin(comment.getUser(), comment.getUserPw());
 
-        PreparedStatement ps = null;
+        if (login.equals("Login success")) {
+            PreparedStatement ps = null;
 
-        try (Connection conn = getConnection()) {
+            try (Connection conn = getConnection()) {
 
-            int count = 0;
+                int count = 0;
 
-            final String command2 = "SELECT count(*) AS rowcount FROM Comments;";
+                final String command2 = "SELECT count(*) AS rowcount FROM Comments;";
 
-            PreparedStatement ps2 = conn.prepareStatement(command2);
+                PreparedStatement ps2 = conn.prepareStatement(command2);
 //			ps.setString(1, "Users");
 
-            ResultSet rs2 = ps2.executeQuery();
+                ResultSet rs2 = ps2.executeQuery();
 
-            while (rs2.next()) {
-                count = rs2.getInt("rowcount");
-            }
+                while (rs2.next()) {
+                    count = rs2.getInt("rowcount");
+                }
+                count++;
 
-            final String command = "INSERT INTO Comments(comment_id, content, user_id, story_id) VALUES("
-                    + "?,"
-                    + "?,"
-                    + "?,"
-                    + "?)";
-            ps = conn.prepareStatement(command);
-            ps.setInt(1, count);
-            ps.setString(2, comment.getContent());
-            ps.setInt(3, getUserByName(comment.getUser()).getUserId());
-            ps.setInt(4, storyId);
+                final String command = "INSERT INTO Comments(comment_id, content, user_id, story_id) VALUES("
+                        + "?,"
+                        + "?,"
+                        + "?,"
+                        + "?)";
+                ps = conn.prepareStatement(command);
+                ps.setInt(1, count);
+                ps.setString(2, comment.getContent());
+                ps.setInt(3, getUserByName(comment.getUser()).getUserId());
+                ps.setInt(4, storyId);
 
-            if (ps != null) {
+                if (ps != null) {
 //                ResultSet rs = ps.executeQuery();
-                ps.executeUpdate();
-
+                    ps.executeUpdate();
+                    result = "Comment added successfully";
 //                while (rs.next()) {
 //                    result.add(rs.getString("Users.user_pw"));
 //                }
-            }
+                }
 
+            }
         }
+        return result;
     }
 
     public void addUser(User user) throws Exception {
@@ -361,6 +373,7 @@ public class MySQL {
             }
 
         }
+
     }
 
     public User getUserById(int id) throws Exception {

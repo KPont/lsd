@@ -14,6 +14,7 @@ public class Comment {
     int id;
     String content;
     String user;
+    String userPw;
 
     public Comment(int id, String content, String user) {
         this.id = id;
@@ -21,9 +22,18 @@ public class Comment {
         this.user = user;
     }
 
-    public Comment(String content, String user) {
+    public Comment(String content, String user, String userPw) {
         this.content = content;
         this.user = user;
+        this.userPw = userPw;
+    }
+
+    public String getUserPw() {
+        return userPw;
+    }
+
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
     }
 
     public int getId() {
