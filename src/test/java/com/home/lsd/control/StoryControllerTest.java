@@ -2,7 +2,7 @@ package com.home.lsd.control;
 
 import javax.ws.rs.core.Response;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class StoryControllerTest {
 
