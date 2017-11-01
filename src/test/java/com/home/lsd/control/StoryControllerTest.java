@@ -2,14 +2,16 @@ package com.home.lsd.control;
 
 import javax.ws.rs.core.Response;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
-class StoryControllerTest {
+public class StoryControllerTest {
 
-	StoryController controller = new StoryController();
+	private StoryController controller = new StoryController();
 
 	@Test
-	void test() {
+	@Ignore
+	public void test() {
 		Response res = controller.getAllStories().build();
 
 		System.out.println(res.getEntity());
