@@ -1,5 +1,7 @@
 package com.home.lsd.control;
 
+import javax.ws.rs.core.Response;
+
 import org.junit.jupiter.api.Test;
 
 class StoryControllerTest {
@@ -8,7 +10,9 @@ class StoryControllerTest {
 
 	@Test
 	void test() {
-		System.out.println(controller.getAllStories());
+		Response res = controller.getAllStories().build();
+
+		System.out.println(res.getEntity());
 	}
 
 }
