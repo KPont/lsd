@@ -6,7 +6,6 @@
 package com.home.lsd.persistence;
 
 import com.home.lsd.entity.Comment;
-import com.home.lsd.control.FileIO;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.User;
 import java.io.BufferedReader;
@@ -56,8 +55,8 @@ public class MySQL {
         return DriverManager.getConnection(this.url, this.username, this.password);
     }
 
-    public ArrayList<String> getUsers() throws Exception {
-        ArrayList<String> result = new ArrayList();
+    public ArrayList<User> getUsers() throws Exception {
+        ArrayList<User> users = new ArrayList();
 
         try (Connection conn = getConnection()) {
             final String command = "SELECT * FROM Users";
@@ -68,12 +67,17 @@ public class MySQL {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                result.add(rs.getString("Users.user_pw"));
+                int userid = rs.getInt("Users.user_id");
+                String userName = rs.getString("Users.user_name");
+                String userPw = rs.getString("Users.user_pw");
+                String userEmail = rs.getString("Users.email");
+
+                users.add(new User(userid, userName, userPw, userEmail));
             }
 
         }
 
-        return result;
+        return users;
     }
 
     public void insertUsersToDB(BufferedReader br) throws Exception {
@@ -177,7 +181,7 @@ public class MySQL {
             while (rs2.next()) {
                 user_id = rs2.getInt("Users.user_id");
             }
-            
+
             int count = 0;
 
             final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
@@ -214,6 +218,65 @@ public class MySQL {
             }
 
         }
+    }
+
+    public Story getLatestStory() throws Exception {
+        
+        Story story = null;
+        PreparedStatement ps = null;
+
+        try (Connection conn = getConnection()) {
+
+            int count = 0;
+
+            final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
+
+            PreparedStatement ps3 = conn.prepareStatement(command3);
+//			ps.setString(1, "Users");
+
+            ResultSet rs3 = ps3.executeQuery();
+
+            while (rs3.next()) {
+                count = rs3.getInt("rowcount");
+            }
+
+            final String command = "SELECT * FROM Stories WHERE Stories.story_id = " + count;
+            ps = conn.prepareStatement(command);
+//            ps.setInt(1, count);
+
+            if (ps != null) {
+//                ResultSet rs = ps.executeQuery();
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int storyId = rs.getInt("Stories.story_id");
+                    String storyTitle = rs.getString("Stories.story_title");
+                    String storyLink = rs.getString("Stories.story_link");
+                    String storyType = rs.getString("Stories.story_type");
+                    int userId = rs.getInt("Stories.user_id");
+
+                    final String command2 = "SELECT * FROM Comments WHERE Comments.story_id = " + storyId;
+
+                    PreparedStatement ps2 = conn.prepareStatement(command2);
+//			ps.setString(1, "Users");
+
+                    ResultSet rs2 = ps2.executeQuery();
+                    ArrayList<Comment> storyComments = new ArrayList();
+                    while (rs2.next()) {
+                        int commentId = rs2.getInt("Comments.comment_id");
+                        String commentContent = rs2.getString("Comments.content");
+                        String commentUser = rs2.getString("Comments.user_id");
+
+                        storyComments.add(new Comment(commentId, commentContent, commentUser));
+                    }
+
+                    story = new Story(storyId, storyTitle, storyLink, storyType, getUserById(userId).getUserName(), storyComments);
+                
+                }
+            }
+
+        }
+        return story;
     }
 
     public void addCommentToStory(int storyId, Comment comment) throws Exception {
@@ -421,7 +484,7 @@ public class MySQL {
             while (rs2.next()) {
                 String userPw = rs2.getString("Users.user_pw");
 
-                if(password.equals(userPw)){
+                if (password.equals(userPw)) {
                     result = "Login success";
                 }
             }

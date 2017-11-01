@@ -32,13 +32,14 @@ public class Facade implements IBackend{
 //        dbc.testAddUser();
 //        dbc.testGetUserById();
 //        dbc.testGetUserByName();
-        dbc.testGetStoryById();
+//        dbc.testGetStoryById();
 //        dbc.testAddCommentToStory();
 //        dbc.testLogin();
+        dbc.getLatestStory();
     }
 
     public void testConnection() throws Exception {
-        ArrayList<String> result = ms.getUsers();
+        ArrayList<User> result = ms.getUsers();
 
         for (int i = 0; i < result.size(); i++) {
             System.out.println(result.get(i));
@@ -47,7 +48,7 @@ public class Facade implements IBackend{
 
     public void testAddUsers() throws Exception {
         FileIO fio = new FileIO();
-        BufferedReader br = fio.read("D:\\Kasper\\School\\lsd-data\\users.csv");
+        BufferedReader br = fio.read("C:\\Users\\KlapTop\\Documents\\school\\Users\\users.csv");
         ms.insertUsersToDB(br);
     }
 
@@ -94,6 +95,10 @@ public class Facade implements IBackend{
     public void testLogin() throws Exception{
         System.out.println(ms.getLogin("Karsten", "hej2"));
         
+    }
+    
+    public void getLatestStory() throws Exception{
+        System.out.println(ms.getLatestStory().toString());
     }
 
     @Override
