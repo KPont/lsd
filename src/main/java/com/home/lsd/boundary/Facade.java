@@ -5,15 +5,17 @@
  */
 package com.home.lsd.boundary;
 
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.home.lsd.control.FileIO;
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.User;
 import com.home.lsd.persistence.MySQL;
-import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -102,8 +104,8 @@ public class Facade implements IBackend {
 	}
 
 	@Override
-	public ArrayList<Story> getStories() {
-		ArrayList<Story> stories = null;
+	public List<Story> getStories() {
+		List<Story> stories = new ArrayList<>();
 		try {
 			stories = ms.getStories();
 		} catch (Exception ex) {

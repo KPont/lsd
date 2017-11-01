@@ -1,2 +1,2 @@
-COPY ./target/*.war /opt/glassfish4/glassfish/domains/domain1/autodeploy/LSD.war
+COPY ./target/LSD.war /opt/glassfish4/glassfish/domains/domain1/autodeploy/LSD.war
 CMD [ "asadmin", "start-domain", "-v" ]

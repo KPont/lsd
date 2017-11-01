@@ -70,4 +70,14 @@ public class StoryController {
 		return Response.status(Status.OK).entity(SystemStatus.ALIVE);
 	}
 
+	public ResponseBuilder getAllStories() {
+		try {
+			return Response.status(Status.OK).entity(facade.getStories());
+		} catch (Exception e) {
+			JsonObjectBuilder json = Json.createObjectBuilder();
+			json.add("error", "Kunne ikke hente alle stories");
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(json.build());
+		}
+	}
+
 }
