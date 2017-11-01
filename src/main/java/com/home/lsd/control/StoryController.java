@@ -1,6 +1,5 @@
 package com.home.lsd.control;
 
-import javax.ejb.Stateless;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -12,7 +11,6 @@ import com.home.lsd.boundary.Facade;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.SystemStatus;
 
-@Stateless
 public class StoryController {
 
 	private final Facade facade = new Facade();

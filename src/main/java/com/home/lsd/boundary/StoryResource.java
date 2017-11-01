@@ -1,6 +1,5 @@
 package com.home.lsd.boundary;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,8 +14,7 @@ import com.home.lsd.control.StoryController;
 @Produces(MediaType.APPLICATION_JSON)
 public class StoryResource {
 
-	@Inject
-	StoryController controller;
+	private final StoryController controller = new StoryController();
 
 	@GET
 	public Response getAllStories() {

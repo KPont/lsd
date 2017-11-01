@@ -1,6 +1,5 @@
 package com.home.lsd.boundary;
 
-import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,8 +16,7 @@ import com.home.lsd.control.StoryController;
 @Produces(MediaType.APPLICATION_JSON)
 public class PostResource {
 
-	@Inject
-	StoryController controller;
+	private final StoryController controller = new StoryController();
 
 	@POST
 	@Path("post")
@@ -31,11 +29,11 @@ public class PostResource {
 	public Response getLatest() {
 		return controller.getLatest().build();
 	}
+
 	@GET
 	@Path("status")
 	public Response getStatus() {
 		return controller.getStatus().build();
 	}
-	
-	
+
 }
