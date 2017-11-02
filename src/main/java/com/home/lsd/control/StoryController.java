@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response.Status;
 
 import com.home.lsd.boundary.Facade;
 import com.home.lsd.entity.Story;
-import com.home.lsd.entity.SystemStatus;
 
 public class StoryController {
 
@@ -65,7 +64,9 @@ public class StoryController {
 	}
 
 	public ResponseBuilder getStatus() {
-		return Response.status(Status.OK).entity(SystemStatus.ALIVE);
+		JsonObjectBuilder json = Json.createObjectBuilder();
+		json.add("status", "Alive");
+		return Response.status(Status.OK).entity(json.build());
 	}
 
 	public ResponseBuilder getAllStories() {
