@@ -5,8 +5,9 @@ import javax.ws.rs.core.Response;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class StoryControllerIT {
+public class StoryControllerTest {
 
+	
 	private StoryController controller = new StoryController();
 
 	@Test
