@@ -23,7 +23,7 @@ import com.home.lsd.persistence.MySQL;
  */
 public class Facade implements IBackend {
 
-	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hackernews", "root", "pwd");
+	MySQL ms = new MySQL();
 
 	public static void main(String[] args) throws Exception {
 		Facade dbc = new Facade();
@@ -107,6 +107,7 @@ public class Facade implements IBackend {
 	public List<Story> getStories() {
 		List<Story> stories = new ArrayList<>();
 		try {
+			System.out.println("Connection started");
 			stories = ms.getStories();
 		} catch (Exception ex) {
 			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);

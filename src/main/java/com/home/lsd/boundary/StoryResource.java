@@ -8,16 +8,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.home.lsd.control.StoryController;
+
 @Path("api")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StoryResource {
 
-	// private final StoryController controller = new StoryController();
+	private final StoryController controller = new StoryController();
 
 	@GET
+	@Path("stories")
 	public Response getAllStories() {
-		return Response.status(Status.OK).build();
+		return controller.getAllStories().build();
+	}
+
+	@GET
+	@Path("test")
+	public Response getTesting() {
+		return Response.status(Status.ACCEPTED).build();
 	}
 
 }
