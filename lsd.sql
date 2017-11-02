@@ -20,11 +20,14 @@ user_id int(11) NOT NULL,
 PRIMARY KEY(story_id),
 FOREIGN KEY(user_id) REFERENCES Users(user_id));
 
+
 CREATE TABLE Comments(
 comment_id int(11) NOT NULL,
 content varchar(60),
+user_id int(11) NOT NULL,
 story_id int(11) NOT NULL,
 PRIMARY KEY(comment_id),
+FOREIGN KEY(user_id) REFERENCES Users(user_id),
 FOREIGN KEY(story_id) REFERENCES Stories(story_id));
 
 INSERT INTO Users
@@ -46,17 +49,18 @@ VALUES(19999997, "test3", "www.whatever.whatever", "-1", 13533633);
 INSERT INTO Stories
 VALUES(19999996, "test4", "www.whatever.whatever", "-1", 13533733);
 
-INSERT INTO Comments
-VALUES(99999991, "test 421", 19999999);
-INSERT INTO Comments
-VALUES(99999992, "test2 420", 19999998);
-INSERT INTO Comments
-VALUES(99999993, "test3 419", 19999997);
-INSERT INTO Comments
-VALUES(99999994, "test4 418", 19999996);
 
 INSERT INTO Comments
-VALUES(99999995, "test 418", 19999999);
+VALUES(99999991, "test 421", 13533433, 19999999);
+INSERT INTO Comments
+VALUES(99999992, "test2 420", 13533433, 19999998);
+INSERT INTO Comments
+VALUES(99999993, "test3 419", 13533633, 19999997);
+INSERT INTO Comments
+VALUES(99999994, "test4 418", 13533633, 19999996);
+
+INSERT INTO Comments
+VALUES(99999995, "test 418", 13533733, 19999999);
 
 
 SELECT * FROM Users;
