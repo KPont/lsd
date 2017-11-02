@@ -25,20 +25,6 @@ public class Facade implements IBackend {
 
 	MySQL ms = new MySQL();
 
-	public static void main(String[] args) throws Exception {
-		Facade dbc = new Facade();
-		// dbc.testConnection();
-		// dbc.testAddUsers();
-		// dbc.testGetStories();
-		dbc.testAddStory();
-		// dbc.testAddUser();
-		// dbc.testGetUserById();
-		// dbc.testGetUserByName();
-		// dbc.testGetStoryById();
-		// dbc.testAddCommentToStory();
-		// dbc.testLogin();
-		// dbc.getLatestStory();
-	}
 
 	public void testConnection() throws Exception {
 		ArrayList<User> result = ms.getUsers();

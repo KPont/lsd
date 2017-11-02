@@ -51,8 +51,8 @@ public class MySQL {
     }
 
     public Connection getConnection() throws Exception {
-        Class.forName(this.driver);
-        return DriverManager.getConnection(this.url, this.username, this.password);
+        Class.forName(driver);
+        return DriverManager.getConnection(url, username, password);
     }
 
     public ArrayList<User> getUsers() throws Exception {

@@ -11,7 +11,6 @@ public class StoryControllerTest {
 	private StoryController controller = new StoryController();
 
 	@Test
-	@Ignore
 	public void testGetAllStories() {
 		Response res = controller.getAllStories().build();
 
