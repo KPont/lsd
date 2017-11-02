@@ -1,5 +1,5 @@
 FROM eguahlak/glassfish-cph
 MAINTAINER AKA RHP
 
-COPY ./lsd_backend/target/*.war /opt/glassfish4/glassfish/domains/domain1/autodeploy/lsd-backend.war
+COPY ./target/*.war /opt/glassfish4/glassfish/domains/domain1/autodeploy/lsd-backend.war
 CMD [ "asadmin", "start-domain", "-v" ]
