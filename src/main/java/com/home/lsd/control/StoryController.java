@@ -1,8 +1,11 @@
 package com.home.lsd.control;
 
+import java.util.List;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -71,7 +74,9 @@ public class StoryController {
 
 	public ResponseBuilder getAllStories() {
 		try {
-			return Response.status(Status.OK).entity(facade.getStories());
+			GenericEntity<List<Story>> storyList = new GenericEntity<List<Story>>(facade.getStories()) {
+			};
+			return Response.status(Status.OK).entity(storyList);
 		} catch (Exception e) {
 			JsonObjectBuilder json = Json.createObjectBuilder();
 			json.add("error", "Kunne ikke hente alle stories");
