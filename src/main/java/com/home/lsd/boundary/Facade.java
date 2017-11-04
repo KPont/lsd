@@ -23,7 +23,7 @@ import com.home.lsd.persistence.MySQL;
  */
 public class Facade implements IBackend {
 
-	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://46.101.111.112:3306/lsd", "root", "admin");
+	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://46.101.111.112:3306/lsd", "admin", "password");
 
 	public void testConnection() throws Exception {
 		ArrayList<User> result = ms.getUsers();
