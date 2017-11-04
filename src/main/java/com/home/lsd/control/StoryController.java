@@ -80,6 +80,7 @@ public class StoryController {
 		} catch (Exception e) {
 			JsonObjectBuilder json = Json.createObjectBuilder();
 			json.add("error", "Kunne ikke hente alle stories");
+			json.add("message", e.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(json.build());
 		}
 	}

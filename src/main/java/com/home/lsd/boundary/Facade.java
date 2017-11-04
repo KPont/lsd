@@ -23,7 +23,7 @@ import com.home.lsd.persistence.MySQL;
  */
 public class Facade implements IBackend {
 
-	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1:3306/lsd", "root", "admin");
+	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1:3306/lsd", "root", "C1sAdm1n");
 
 	public void testConnection() throws Exception {
 		ArrayList<User> result = ms.getUsers();
@@ -89,15 +89,9 @@ public class Facade implements IBackend {
 	}
 
 	@Override
-	public List<Story> getStories() {
+	public List<Story> getStories() throws Exception {
 		List<Story> stories = new ArrayList<>();
-		try {
-			System.out.println("Connection started");
-			stories = ms.getStories();
-		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
+		stories = ms.getStories();
 		return stories;
 	}
 

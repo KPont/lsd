@@ -14,7 +14,7 @@ import com.home.lsd.entity.Story;
  * @author Kasper
  */
 public interface IBackend {
-    List<Story> getStories();
+    List<Story> getStories() throws Exception;
     
     Story getStory(int id);
     
