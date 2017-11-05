@@ -5,7 +5,6 @@
  */
 package com.home.lsd.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

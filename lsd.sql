@@ -5,14 +5,14 @@ DROP TABLE IF EXISTS Stories;
 DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users(
-user_id int(11) NOT NULL,
+user_id int(11) NOT NULL AUTO_INCREMENT,
 user_name varchar(60) NOT NULL,
 user_pw varchar(60) NOT NULL,
 email varchar(60),
 PRIMARY KEY(user_id));
 
 CREATE TABLE Stories(
-story_id int(11) NOT NULL,
+story_id int(11) NOT NULL AUTO_INCREMENT,
 story_title varchar(60) NOT NULL,
 story_link varchar(60) NOT NULL,
 story_type varchar(60) NOT NULL,
@@ -22,7 +22,7 @@ FOREIGN KEY(user_id) REFERENCES Users(user_id));
 
 
 CREATE TABLE Comments(
-comment_id int(11) NOT NULL,
+comment_id int(11) NOT NULL AUTO_INCREMENT,
 content varchar(60),
 user_id int(11) NOT NULL,
 story_id int(11) NOT NULL,
@@ -31,45 +31,30 @@ FOREIGN KEY(user_id) REFERENCES Users(user_id),
 FOREIGN KEY(story_id) REFERENCES Stories(story_id));
 
 INSERT INTO Users
-VALUES(13533433, "John", "hej", "whatever@whatever.com");
+VALUES(NULL,"John", "hej", "whatever@whatever.com");
 INSERT INTO Users
-VALUES(13533533, "Per", "hej2", "whatever2@whatever.com");
+VALUES(NULL,"Per", "hej2", "whatever2@whatever.com");
 INSERT INTO Users
-VALUES(13533633, "Karsten", "hej3", "whatever3@whatever.com");
+VALUES(NULL,"Karsten", "hej3", "whatever3@whatever.com");
 INSERT INTO Users
-VALUES(13533733, "Mette", "hej4", "whatever4@whatever.com");
+VALUES(NULL,"Mette", "hej4", "whatever4@whatever.com");
 
 
 INSERT INTO Stories
-VALUES(19999999, "test", "www.whatever.whatever", "-1", 13533433);
+VALUES(NULL,"test", "www.whatever.whatever", "-1", 1);
 INSERT INTO Stories
-VALUES(19999998, "test2", "www.whatever.whatever", "-1", 13533533);
+VALUES(NULL,"test2", "www.whatever.whatever", "-1", 2);
 INSERT INTO Stories
-VALUES(19999997, "test3", "www.whatever.whatever", "-1", 13533633);
+VALUES(NULL,"test3", "www.whatever.whatever", "-1", 2);
 INSERT INTO Stories
-VALUES(19999996, "test4", "www.whatever.whatever", "-1", 13533733);
+VALUES(NULL,"test4", "www.whatever.whatever", "-1", 3);
 
 
 INSERT INTO Comments
-VALUES(99999991, "test 421", 13533433, 19999999);
+VALUES(NULL,"test 421", 1, 2);
 INSERT INTO Comments
-VALUES(99999992, "test2 420", 13533433, 19999998);
+VALUES(NULL,"test2 420", 2, 1);
 INSERT INTO Comments
-VALUES(99999993, "test3 419", 13533633, 19999997);
+VALUES(NULL,"test3 419", 3, 1);
 INSERT INTO Comments
-VALUES(99999994, "test4 418", 13533633, 19999996);
-
-INSERT INTO Comments
-VALUES(99999995, "test 418", 13533733, 19999999);
-
-
-SELECT * FROM Users;
-
-SELECT story_id FROM Stories WHERE story_title = "testAdd2";
-
-SELECT * FROM Users WHERE Users.user_name = "Anton-Arne";
-
-SELECT user_name FROM Users WHERE user_id = (SELECT Stories.user_id FROM Stories WHERE Stories.story_id = (SELECT Comments.story_id FROM Comments WHERE Comments.content = "test 421"));
-
-SELECT * FROM Comments WHERE Comments.story_id = (SELECT Stories.story_id FROM Stories WHERE Stories.story_title = "test");
-
+VALUES(NULL,"test4 418", 4, 3);

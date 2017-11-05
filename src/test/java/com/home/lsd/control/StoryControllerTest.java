@@ -17,4 +17,10 @@ public class StoryControllerTest {
 		System.out.println(res.getEntity());
 	}
 
+	
+	@Test
+	public void testGet() {
+		Response res = controller.getLatest().build();
+		System.out.println(res.getEntity());
+	}
 }

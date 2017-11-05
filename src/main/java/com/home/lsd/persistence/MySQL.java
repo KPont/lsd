@@ -19,6 +19,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ws.rs.core.GenericEntity;
+
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.User;
@@ -151,13 +153,13 @@ public class MySQL {
 					String commentUser = rs2.getString("Comments.user_id");
 					storyComments.add(new Comment(commentId, commentContent, commentUser));
 				}
-
 				Story story = new Story(storyid, storyTitle, storyLink, storyType, storyUser, storyComments);
 				stories.add(story);
 			}
 		}
 
 		return stories;
+
 	}
 
 	public String addStory(Story story) throws Exception {
@@ -238,7 +240,7 @@ public class MySQL {
 			while (rs3.next()) {
 				count = rs3.getInt("rowcount");
 			}
-
+			System.out.println(count);
 			final String command = "SELECT * FROM Stories WHERE Stories.story_id = " + count;
 			ps = conn.prepareStatement(command);
 			// ps.setInt(1, count);

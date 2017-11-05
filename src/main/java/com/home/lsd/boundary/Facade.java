@@ -84,13 +84,7 @@ public class Facade implements IBackend {
 
 	@Override
 	public List<Story> getStories() throws Exception {
-		List<Story> stories = ms.getStories();
-		stories.stream().forEach(s -> {
-			GenericEntity<List<Comment>> commentsList = new GenericEntity<List<Comment>>(s.getComments()) {
-			};
-		});
-		return stories;
-
+		return ms.getStories();
 	}
 
 	@Override
