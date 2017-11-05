@@ -76,7 +76,7 @@ public class StoryController {
 		try {
 			GenericEntity<List<Story>> storyList = new GenericEntity<List<Story>>(facade.getStories()) {
 			};
-			return Response.status(Status.OK).entity(storyList);
+			return Response.ok(storyList);
 		} catch (Exception e) {
 			JsonObjectBuilder json = Json.createObjectBuilder();
 			json.add("error", "Kunne ikke hente alle stories");

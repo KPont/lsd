@@ -6,6 +6,7 @@
 package com.home.lsd.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,96 +14,96 @@ import java.util.ArrayList;
  */
 public class Story {
 
-    int id;
-    String title;
-    String link;
-    String type;
-    String user;
-    String userPw;
-    ArrayList<Comment> comments;
+	int id;
+	String title;
+	String link;
+	String type;
+	String user;
+	String userPw;
+	List<Comment> comments;
 
-    public Story(int id, String title, String link, String type, String user, ArrayList<Comment> comments) {
-        this.id = id;
-        this.title = title;
-        this.link = link;
-        this.type = type;
-        this.user = user;
-        this.comments = comments;
-    }
-    
-    public Story(String title, String link, String type, String user, String userPw, ArrayList<Comment> comments) {
-        this.title = title;
-        this.link = link;
-        this.type = type;
-        this.user = user;
-        this.userPw = userPw;
-        this.comments = comments;
-    }
+	public Story(int id, String title, String link, String type, String user, List<Comment> storyComments) {
+		this.id = id;
+		this.title = title;
+		this.link = link;
+		this.type = type;
+		this.user = user;
+		this.comments = storyComments;
+	}
 
-    public String getUserPw() {
-        return userPw;
-    }
+	public Story(String title, String link, String type, String user, String userPw, ArrayList<Comment> comments) {
+		this.title = title;
+		this.link = link;
+		this.type = type;
+		this.user = user;
+		this.userPw = userPw;
+		this.comments = comments;
+	}
 
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
-    }
-    
-    
-    public int getId() {
-        return id;
-    }
+	public String getUserPw() {
+		return userPw;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getLink() {
-        return link;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setLink(String link) {
-        this.link = link;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getLink() {
+		return link;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setLink(String link) {
+		this.link = link;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public ArrayList<Comment> getComments() {
-        return comments;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
-    }
+	public void setUser(String user) {
+		this.user = user;
+	}
 
-    @Override
-    public String toString() {
-        String result = "ID = " + id + " Story Title = " + title + " Link = " + link + " Type = " + type + " User = " + user + " Comments: ";
-        for (int i = 0; i < comments.size(); i++) {
-            result += ("COMMENT # " + i + " " + comments.get(i).getContent() + " BY " + comments.get(i).getUser());
-        }
-        return result;
-    }
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	@Override
+	public String toString() {
+		String result = "ID = " + id + " Story Title = " + title + " Link = " + link + " Type = " + type + " User = "
+				+ user + " Comments: ";
+		for (int i = 0; i < comments.size(); i++) {
+			result += ("COMMENT # " + i + " " + comments.get(i).getContent() + " BY " + comments.get(i).getUser());
+		}
+		return result;
+	}
 
 }

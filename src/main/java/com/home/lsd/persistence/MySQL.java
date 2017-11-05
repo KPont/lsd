@@ -5,18 +5,23 @@
  */
 package com.home.lsd.persistence;
 
-import com.home.lsd.entity.Comment;
-import com.home.lsd.entity.Story;
-import com.home.lsd.entity.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.Format;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.home.lsd.entity.Comment;
+import com.home.lsd.entity.Story;
+import com.home.lsd.entity.User;
 
 /**
  *
@@ -118,15 +123,14 @@ public class MySQL {
 		}
 	}
 
-	public ArrayList<Story> getStories() throws Exception {
-		ArrayList<Story> stories = new ArrayList();
+	public List<Story> getStories() throws Exception {
+		List<Story> stories = new ArrayList();
+		List<Comment> storyComments = new ArrayList();
 
 		try (Connection conn = getConnection()) {
 			final String command = "SELECT * FROM Stories";
 
 			PreparedStatement ps = conn.prepareStatement(command);
-			// ps.setString(1, "Users");
-
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -135,26 +139,21 @@ public class MySQL {
 				String storyLink = rs.getString("Stories.story_link");
 				String storyType = rs.getString("Stories.story_type");
 				String storyUser = rs.getString("Stories.user_id");
-				ArrayList<Comment> storyComments = new ArrayList();
 
 				final String command2 = "SELECT * FROM Comments WHERE Comments.story_id = " + storyid;
 
 				PreparedStatement ps2 = conn.prepareStatement(command2);
-				// ps.setString(1, "Users");
-
 				ResultSet rs2 = ps2.executeQuery();
 
 				while (rs2.next()) {
 					int commentId = rs2.getInt("Comments.comment_id");
 					String commentContent = rs2.getString("Comments.content");
 					String commentUser = rs2.getString("Comments.user_id");
-
 					storyComments.add(new Comment(commentId, commentContent, commentUser));
 				}
-				Story story = new Story(storyid, storyTitle, storyLink, storyType, storyUser, storyComments);
 
+				Story story = new Story(storyid, storyTitle, storyLink, storyType, storyUser, storyComments);
 				stories.add(story);
-				// }
 			}
 		}
 

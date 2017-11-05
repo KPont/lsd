@@ -39,14 +39,6 @@ public class Facade implements IBackend {
 		ms.insertUsersToDB(br);
 	}
 
-	public void testGetStories() throws Exception {
-		ArrayList<Story> stories = ms.getStories();
-
-		for (int i = 0; i < stories.size(); i++) {
-			System.out.println(stories.get(i).toString());
-		}
-	}
-
 	public void testAddStory() throws Exception {
 		Story story = new Story("testAdd2", "www.testadd2.com", "testadd2type", "Karsten", "hej3", null);
 		System.out.println(ms.addStory(story));
@@ -90,9 +82,7 @@ public class Facade implements IBackend {
 
 	@Override
 	public List<Story> getStories() throws Exception {
-		List<Story> stories = new ArrayList<>();
-		stories = ms.getStories();
-		return stories;
+		return ms.getStories();
 	}
 
 	@Override
