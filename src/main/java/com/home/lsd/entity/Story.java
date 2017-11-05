@@ -22,13 +22,13 @@ public class Story {
 	String userPw;
 	List<Comment> comments;
 
-	public Story(int id, String title, String link, String type, String user, List<Comment> storyComments) {
+	public Story(int id, String title, String link, String type, String user, List<Comment> comments) {
 		this.id = id;
 		this.title = title;
 		this.link = link;
 		this.type = type;
 		this.user = user;
-		this.comments = storyComments;
+		this.comments = comments;
 	}
 
 	public Story(String title, String link, String type, String user, String userPw, ArrayList<Comment> comments) {
@@ -94,16 +94,6 @@ public class Story {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
-	}
-
-	@Override
-	public String toString() {
-		String result = "ID = " + id + " Story Title = " + title + " Link = " + link + " Type = " + type + " User = "
-				+ user + " Comments: ";
-		for (int i = 0; i < comments.size(); i++) {
-			result += ("COMMENT # " + i + " " + comments.get(i).getContent() + " BY " + comments.get(i).getUser());
-		}
-		return result;
 	}
 
 }
