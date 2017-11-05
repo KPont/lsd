@@ -14,19 +14,18 @@ import com.home.lsd.entity.Story;
  * @author Kasper
  */
 public interface IBackend {
-    List<Story> getStories() throws Exception;
-    
-    Story getStory(int id);
-    
-    void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName, String userPw);
-    
-    void manageStory(int storyID, Story story);
-    
-    String login(String userName, String password);
-    
-    void registerUser(String userName, String password, String email);
-    
-    void addCommentToStory(int storyId, String userId, String userPw, String comment);
-    
-    
+	List<Story> getStories() throws Exception;
+
+	Story getStory(int id);
+
+	String addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName, String userPw);
+
+	void manageStory(int storyID, Story story);
+
+	String login(String userName, String password);
+
+	void registerUser(String userName, String password, String email);
+
+	void addCommentToStory(int storyId, String userId, String userPw, String comment);
+
 }

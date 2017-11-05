@@ -19,8 +19,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.GenericEntity;
-
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.User;
@@ -174,46 +172,25 @@ public class MySQL {
 				int user_id = 0;
 
 				final String command2 = "SELECT user_id FROM Users WHERE Users.user_name = '" + story.getUser() + "';";
-
 				PreparedStatement ps2 = conn.prepareStatement(command2);
-				// ps.setString(1, "Users");
-
 				ResultSet rs2 = ps2.executeQuery();
 
 				while (rs2.next()) {
 					user_id = rs2.getInt("Users.user_id");
 				}
-
-				int count = 0;
-
-				final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
-
-				PreparedStatement ps3 = conn.prepareStatement(command3);
-				// ps.setString(1, "Users");
-
-				ResultSet rs3 = ps3.executeQuery();
-
-				while (rs3.next()) {
-					count = rs3.getInt("rowcount");
-				}
-				count++;
+				System.out.println(user_id);
 
 				final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
-						+ "?," + "?," + "?," + "?," + "?)";
+						+ "NULL," + "?," + "?," + "?," + "?)";
 				ps = conn.prepareStatement(command);
-				ps.setInt(1, count);
-				ps.setString(2, story.getTitle());
-				ps.setString(3, story.getLink());
-				ps.setString(4, story.getType());
-				ps.setInt(5, user_id);
+				ps.setString(1, story.getTitle());
+				ps.setString(2, story.getLink());
+				ps.setString(3, story.getType());
+				ps.setInt(4, user_id);
 
 				if (ps != null) {
-					// ResultSet rs = ps.executeQuery();
 					ps.executeUpdate();
 					result = "Successfully added story";
-					// while (rs.next()) {
-					// result.add(rs.getString("Users.user_pw"));
-					// }
 				}
 
 			}
@@ -229,24 +206,17 @@ public class MySQL {
 		try (Connection conn = getConnection()) {
 
 			int count = 0;
-
 			final String command3 = "SELECT count(*) AS rowcount FROM Stories;";
 
 			PreparedStatement ps3 = conn.prepareStatement(command3);
-			// ps.setString(1, "Users");
-
 			ResultSet rs3 = ps3.executeQuery();
 
 			while (rs3.next()) {
 				count = rs3.getInt("rowcount");
 			}
-			System.out.println(count);
 			final String command = "SELECT * FROM Stories WHERE Stories.story_id = " + count;
 			ps = conn.prepareStatement(command);
-			// ps.setInt(1, count);
-
 			if (ps != null) {
-				// ResultSet rs = ps.executeQuery();
 				ResultSet rs = ps.executeQuery();
 
 				while (rs.next()) {
@@ -259,7 +229,6 @@ public class MySQL {
 					final String command2 = "SELECT * FROM Comments WHERE Comments.story_id = " + storyId;
 
 					PreparedStatement ps2 = conn.prepareStatement(command2);
-					// ps.setString(1, "Users");
 
 					ResultSet rs2 = ps2.executeQuery();
 					ArrayList<Comment> storyComments = new ArrayList();
@@ -273,7 +242,6 @@ public class MySQL {
 
 					story = new Story(storyId, storyTitle, storyLink, storyType, getUserById(userId).getUserName(),
 							storyComments);
-
 				}
 			}
 
@@ -331,35 +299,14 @@ public class MySQL {
 		PreparedStatement ps = null;
 
 		try (Connection conn = getConnection()) {
-
-			int count = 0;
-
-			final String command2 = "SELECT count(*) AS rowcount FROM Users;";
-
-			PreparedStatement ps2 = conn.prepareStatement(command2);
-			// ps.setString(1, "Users");
-
-			ResultSet rs2 = ps2.executeQuery();
-
-			while (rs2.next()) {
-				count = rs2.getInt("rowcount");
-			}
-
-			final String command = "INSERT INTO Users(user_id, user_name, user_pw, email) VALUES(" + "?," + "?," + "?,"
-					+ "?)";
+			final String command = "INSERT INTO Users(user_id, user_name, user_pw, email) VALUES(" + "NULL," + "?,"
+					+ "?," + "?)";
 			ps = conn.prepareStatement(command);
-			ps.setInt(1, count);
-			ps.setString(2, user.getUserName());
-			ps.setString(3, user.getUserPw());
-			ps.setString(4, user.getEmail());
-
+			ps.setString(1, user.getUserName());
+			ps.setString(2, user.getUserPw());
+			ps.setString(3, user.getEmail());
 			if (ps != null) {
-				// ResultSet rs = ps.executeQuery();
 				ps.executeUpdate();
-
-				// while (rs.next()) {
-				// result.add(rs.getString("Users.user_pw"));
-				// }
 			}
 
 		}

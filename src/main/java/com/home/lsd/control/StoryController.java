@@ -1,6 +1,5 @@
 package com.home.lsd.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.Json;
@@ -12,9 +11,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import com.home.lsd.boundary.Facade;
-import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
-import com.home.lsd.entity.StoryWrapper;
 
 public class StoryController {
 
@@ -61,7 +58,7 @@ public class StoryController {
 	public ResponseBuilder getLatest() {
 		try {
 			Story latest = facade.getLatestStory();
-			return Response.status(Status.OK).entity(latest);
+			return Response.status(Status.OK).entity(latest.getId());
 		} catch (Exception e) {
 			JsonObjectBuilder json = Json.createObjectBuilder();
 			json.add("error", "Kunne ikke finde seneste story");
@@ -70,9 +67,7 @@ public class StoryController {
 	}
 
 	public ResponseBuilder getStatus() {
-		JsonObjectBuilder json = Json.createObjectBuilder();
-		json.add("status", "Alive");
-		return Response.status(Status.OK).entity(json.build());
+		return Response.status(Status.OK).entity("Alive");
 	}
 
 	public ResponseBuilder getAllStories() {

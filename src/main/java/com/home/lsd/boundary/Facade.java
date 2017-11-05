@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.GenericEntity;
-
 import com.home.lsd.control.FileIO;
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
@@ -100,15 +98,14 @@ public class Facade implements IBackend {
 	}
 
 	@Override
-	public void addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName,
+	public String addStory(int storyId, String storyTitle, String storyLink, String storyType, String userName,
 			String userPw) {
-		Story story = new Story(storyTitle, storyLink, storyType, userName, userPw, null);
-
 		try {
-			ms.addStory(story);
-		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+			return ms.addStory(new Story(storyTitle, storyLink, storyType, userName, userPw, null));
+		} catch (Exception e) {
+			return e.getMessage();
 		}
+
 	}
 
 	@Override
