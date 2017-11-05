@@ -31,7 +31,7 @@ public class Story {
 		this.comments = comments;
 	}
 
-	public Story(String title, String link, String type, String user, String userPw, ArrayList<Comment> comments) {
+	public Story(String title, String link, String type, String user, String userPw, List<Comment> comments) {
 		this.title = title;
 		this.link = link;
 		this.type = type;

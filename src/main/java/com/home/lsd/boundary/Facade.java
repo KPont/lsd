@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ws.rs.core.GenericEntity;
+
 import com.home.lsd.control.FileIO;
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
@@ -82,7 +84,13 @@ public class Facade implements IBackend {
 
 	@Override
 	public List<Story> getStories() throws Exception {
-		return ms.getStories();
+		List<Story> stories = ms.getStories();
+		stories.stream().forEach(s -> {
+			GenericEntity<List<Comment>> commentsList = new GenericEntity<List<Comment>>(s.getComments()) {
+			};
+		});
+		return stories;
+
 	}
 
 	@Override
