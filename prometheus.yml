@@ -1,0 +1,12 @@
+crape_configs:
+  # Scrape Prometheus itself every 5 seconds.
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    target_groups:
+      - targets: ['localhost:9090']
+
+  # Scrape the Node Exporter every 5 seconds.
+  - job_name: 'node'
+    scrape_interval: 5s
+    target_groups:
+      - targets: ['46.101.111.112:9100']

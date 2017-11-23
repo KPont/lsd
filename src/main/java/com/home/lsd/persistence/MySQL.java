@@ -34,21 +34,6 @@ public class MySQL {
 	private String password;
 	private String driver;
 
-	public MySQL() {
-		Properties props = new Properties();
-
-		try {
-			InputStream stream = MySQL.class.getClass().getResourceAsStream("db.properties");
-			props.load(stream);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.driver = props.getProperty("MYSQL_DRIVER_CLASS");
-		this.url = props.getProperty("MYSQL_URL");
-		this.username = props.getProperty("MYSQL_USERNAME");
-		this.password = props.getProperty("MYSQL_PASSWORD");
-	}
-
 	public MySQL(String driver, String url, String username, String password) {
 		this.url = url;
 		this.username = username;
@@ -75,10 +60,9 @@ public class MySQL {
 			while (rs.next()) {
 				int userid = rs.getInt("Users.user_id");
 				String userName = rs.getString("Users.user_name");
-				String userPw = rs.getString("Users.user_pw");
-				String userEmail = rs.getString("Users.email");
+				String userPw = rs.getString("Users.user_pwd");
 
-				users.add(new User(userid, userName, userPw, userEmail));
+				users.add(new User(userid, userName, userPw));
 			}
 
 		}
@@ -104,7 +88,7 @@ public class MySQL {
 		PreparedStatement ps = null;
 		try (Connection conn = getConnection()) {
 			for (int i = 0; i < users.size(); i++) {
-				final String command = "INSERT INTO Users(user_id, user_name, user_pw) VALUES(" + "?," + "?," + "?)";
+				final String command = "INSERT INTO Users(user_id, user_name, user_pwd) VALUES(" + "?," + "?," + "?)";
 				ps = conn.prepareStatement(command);
 				ps.setInt(1, users.get(i).getUserId());
 				ps.setString(2, users.get(i).getUserName());
@@ -178,7 +162,6 @@ public class MySQL {
 				while (rs2.next()) {
 					user_id = rs2.getInt("Users.user_id");
 				}
-				System.out.println(user_id);
 
 				final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
 						+ "NULL," + "?," + "?," + "?," + "?)";
@@ -299,12 +282,11 @@ public class MySQL {
 		PreparedStatement ps = null;
 
 		try (Connection conn = getConnection()) {
-			final String command = "INSERT INTO Users(user_id, user_name, user_pw, email) VALUES(" + "NULL," + "?,"
-					+ "?," + "?)";
+			final String command = "INSERT INTO Users(user_id, user_name, user_pwd) VALUES(" + "NULL," + "?," + "?,"
+					+ "?)";
 			ps = conn.prepareStatement(command);
 			ps.setString(1, user.getUserName());
 			ps.setString(2, user.getUserPw());
-			ps.setString(3, user.getEmail());
 			if (ps != null) {
 				ps.executeUpdate();
 			}
@@ -328,10 +310,9 @@ public class MySQL {
 			while (rs2.next()) {
 				int userId = rs2.getInt("Users.user_id");
 				String userName = rs2.getString("Users.user_name");
-				String userPw = rs2.getString("Users.user_pw");
-				String userEmail = rs2.getString("Users.email");
+				String userPw = rs2.getString("Users.user_pwd");
 
-				user = new User(userId, userName, userPw, userEmail);
+				user = new User(userId, userName, userPw);
 			}
 
 		}
@@ -353,10 +334,9 @@ public class MySQL {
 			while (rs2.next()) {
 				int userId = rs2.getInt("Users.user_id");
 				String userName = rs2.getString("Users.user_name");
-				String userPw = rs2.getString("Users.user_pw");
-				String userEmail = rs2.getString("Users.email");
+				String userPw = rs2.getString("Users.user_pwd");
 
-				user = new User(userId, userName, userPw, userEmail);
+				user = new User(userId, userName, userPw);
 			}
 
 		}
@@ -432,7 +412,7 @@ public class MySQL {
 			ResultSet rs2 = ps2.executeQuery();
 
 			while (rs2.next()) {
-				String userPw = rs2.getString("Users.user_pw");
+				String userPw = rs2.getString("Users.user_pwd");
 
 				if (password.equals(userPw)) {
 					result = "Login success";

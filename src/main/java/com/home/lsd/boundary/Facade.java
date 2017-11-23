@@ -5,13 +5,10 @@
  */
 package com.home.lsd.boundary;
 
-import java.io.BufferedReader;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.home.lsd.control.FileIO;
+import org.apache.log4j.Logger;
+
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
 import com.home.lsd.entity.User;
@@ -25,56 +22,7 @@ public class Facade implements IBackend {
 
 	MySQL ms = new MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://46.101.111.112:3306/lsd", "admin", "password");
 
-	public void testConnection() throws Exception {
-		ArrayList<User> result = ms.getUsers();
-
-		for (int i = 0; i < result.size(); i++) {
-			System.out.println(result.get(i));
-		}
-	}
-
-	public void testAddUsers() throws Exception {
-		FileIO fio = new FileIO();
-		BufferedReader br = fio.read("C:\\Users\\KlapTop\\Documents\\school\\Users\\users.csv");
-		ms.insertUsersToDB(br);
-	}
-
-	public void testAddStory() throws Exception {
-		Story story = new Story("testAdd2", "www.testadd2.com", "testadd2type", "Karsten", "hej3", null);
-		System.out.println(ms.addStory(story));
-	}
-
-	public void testAddUser() throws Exception {
-		User user = new User("Anton-Arne", "Anton-Arne's Password", "Anton-Arne@Anton-Arnes.dk");
-		ms.addUser(user);
-	}
-
-	public void testGetUserById() throws Exception {
-		User user = ms.getUserById(340997);
-
-		System.out.println(user.toString());
-	}
-
-	public void testGetUserByName() throws Exception {
-		User user = ms.getUserByName("Anton-Arne");
-
-		System.out.println(user.toString());
-	}
-
-	public void testGetStoryById() throws Exception {
-		Story story = ms.getStoryById(10);
-
-		System.out.println(story.toString());
-	}
-
-	public void testAddCommentToStory() throws Exception {
-		System.out.println(ms.addCommentToStory(10, new Comment("New Comment Test", "Karsten", "hej3")));
-	}
-
-	public void testLogin() throws Exception {
-		System.out.println(ms.getLogin("Karsten", "hej2"));
-
-	}
+	private final static Logger logger = Logger.getLogger(Facade.class.getName());
 
 	public Story getLatestStory() throws Exception {
 		return ms.getLatestStory();
@@ -91,7 +39,7 @@ public class Facade implements IBackend {
 		try {
 			story = ms.getStoryById(id);
 		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex.getMessage());
 		}
 
 		return story;
@@ -103,6 +51,7 @@ public class Facade implements IBackend {
 		try {
 			return ms.addStory(new Story(storyTitle, storyLink, storyType, userName, userPw, null));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 
@@ -120,7 +69,6 @@ public class Facade implements IBackend {
 		try {
 			result = ms.getLogin(userName, password);
 		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return result;
 	}
@@ -131,17 +79,16 @@ public class Facade implements IBackend {
 		try {
 			ms.addUser(user);
 		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
 	@Override
-	public void addCommentToStory(int storyId, String userName, String userPw, String comment) {
+	public String addCommentToStory(int storyId, String userName, String userPw, String comment) {
 		try {
-			ms.addCommentToStory(storyId, new Comment(comment, userName, userPw));
+			return ms.addCommentToStory(storyId, new Comment(comment, userName, userPw));
 		} catch (Exception ex) {
-			Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return comment;
 	}
 
 }

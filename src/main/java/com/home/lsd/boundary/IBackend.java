@@ -26,6 +26,6 @@ public interface IBackend {
 
 	void registerUser(String userName, String password, String email);
 
-	void addCommentToStory(int storyId, String userId, String userPw, String comment);
+	String addCommentToStory(int storyId, String userId, String userPw, String comment);
 
 }
