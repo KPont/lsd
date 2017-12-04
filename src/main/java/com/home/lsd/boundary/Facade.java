@@ -7,6 +7,8 @@ package com.home.lsd.boundary;
 
 import java.util.List;
 
+import javax.json.JsonObject;
+
 import org.apache.log4j.Logger;
 
 import com.home.lsd.entity.Comment;
@@ -89,6 +91,16 @@ public class Facade implements IBackend {
 		} catch (Exception ex) {
 		}
 		return comment;
+	}
+
+	public Object addStoryPerformance(JsonObject input) {
+		try {
+			return ms.addStoryPerformance(input);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

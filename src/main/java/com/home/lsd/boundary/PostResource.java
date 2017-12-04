@@ -27,8 +27,12 @@ public class PostResource {
 		controller = new StoryController();
 	}
 
+	/*
+	 * LEGACY CODE
+	 *
+	 */
 	@POST
-	@Path("post")
+	@Path("postOLD")
 	public Response post(JsonObject input) {
 		Summary.Timer timer = Metrics.requestLatency.startTimer();
 		Response result = controller.createPost(input).build();
@@ -46,6 +50,12 @@ public class PostResource {
 	@Path("status")
 	public Response getStatus() {
 		return controller.getStatus().build();
+	}
+
+	@POST
+	@Path("post")
+	public Response postPerformance(JsonObject input) {
+		return controller.createPostPerformance(input).build();
 	}
 
 }

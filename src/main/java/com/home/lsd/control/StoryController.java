@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import com.home.lsd.boundary.Facade;
 import com.home.lsd.entity.Story;
 
+import io.prometheus.client.Summary;
+
 public class StoryController {
 
 	private final Facade facade = new Facade();
@@ -62,7 +64,7 @@ public class StoryController {
 	public ResponseBuilder getLatest() {
 		try {
 			Story latest = facade.getLatestStory();
-			logger.trace("Latest user created:  " + latest.getUser() );
+			logger.trace("Latest user created:  " + latest.getUser());
 			return Response.status(Status.OK).entity(latest.getId());
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -87,6 +89,18 @@ public class StoryController {
 			json.add("error", "Kunne ikke hente alle stories");
 			json.add("message", e.getMessage());
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(json.build());
+		}
+	}
+
+	public ResponseBuilder createPostPerformance(JsonObject input) {
+		if (input.getString("post_type").equals("story")) {
+			facade.addStoryPerformance(input);
+			return Response.status(Status.OK);
+		} else if (input.getString("post_type").equals("comment")) {
+			//return Response.status(Status.OK).entity(facade.addCommentToStory(storyId, userName, userPw, comment));
+			return Response.status(Status.OK);
+		} else {
+			return Response.status(Status.OK);
 		}
 	}
 

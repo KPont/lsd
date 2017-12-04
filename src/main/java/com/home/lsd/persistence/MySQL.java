@@ -12,12 +12,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.json.JsonObject;
 
 import com.home.lsd.entity.Comment;
 import com.home.lsd.entity.Story;
@@ -112,7 +115,7 @@ public class MySQL {
 		List<Comment> storyComments = new ArrayList();
 
 		try (Connection conn = getConnection()) {
-			final String command = "SELECT * FROM Stories";
+			final String command = "SELECT * FROM Stories limit 5";
 
 			PreparedStatement ps = conn.prepareStatement(command);
 			ResultSet rs = ps.executeQuery();
@@ -421,6 +424,30 @@ public class MySQL {
 
 		}
 		return result;
+	}
+
+	public int addStoryPerformance(JsonObject input) throws Exception {
+		try (Connection conn = getConnection()) {
+
+			final String command2 = "SELECT user_id FROM Users WHERE Users.user_name = ?";
+			PreparedStatement ps2 = conn.prepareStatement(command2);
+			ps2.setString(1, input.getString("username"));
+			ResultSet rs2 = ps2.executeQuery();
+			int user_id = 0;
+			while (rs2.next()) {
+				user_id = rs2.getInt("Users.user_id");
+			}
+
+			final String command = "INSERT INTO Stories(story_id, story_title, story_link, story_type, user_id) VALUES("
+					+ "NULL," + "?," + "?," + "?," + "?)";
+			PreparedStatement ps = conn.prepareStatement(command);
+			ps.setString(1, input.getString("post_title"));
+			ps.setString(2, input.getString("post_url"));
+			ps.setString(3, input.getString("post_type"));
+			ps.setInt(4, user_id);
+			return ps.executeUpdate();
+
+		}
 	}
 
 }

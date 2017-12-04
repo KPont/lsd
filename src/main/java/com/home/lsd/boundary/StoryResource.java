@@ -22,11 +22,4 @@ public class StoryResource {
 	public Response getAllStories() {
 		return controller.getAllStories().build();
 	}
-
-	@GET
-	@Path("test")
-	public Response getTesting() {
-		return Response.status(Status.ACCEPTED).build();
-	}
-
 }
